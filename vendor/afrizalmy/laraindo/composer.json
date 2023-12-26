@@ -1,0 +1,54 @@
+{
+    "name": "afrizalmy/laraindo",
+    "description": "Package Laravel 9 sederhana untuk format indonesia terdiri dari Localization, Rupiah format, Date format",
+    "type": "library",
+    "keywords": [
+        "Localization",
+        "Rupiah",
+        "Tanggal",
+        "laravel",
+        "laravel 9",
+        "indo",
+        "indonesia"
+    ],
+    "require": {
+        "php": ">=8.0.2",
+        "laravel/framework": "^9.0|^10.0"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Laraindo\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Laraindo\\LaraindoServiceProvider"
+            ]
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Laraindo\\Test\\": "tests"
+        }
+    },
+    "authors": [
+        {
+            "name": "Afrizal",
+            "email": "afrizalyasin423@gmail.com",
+            "homepage": "https://github.com/afrizal423",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "afrizalyasin423@gmail.com",
+        "issues": "https://github.com/afrizal423/laraindo/issues",
+        "source": "https://github.com/afrizal423/laraindo",
+        "docs": "https://github.com/afrizal423/laraindo/README.md"
+    },
+    "minimum-stability": "dev",
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    }
+}
