@@ -9,7 +9,7 @@ class Wallet extends Model
 {
     use HasFactory;
 
-    protected $table = 'acc_wallets_girl';
+    protected $table = 'acc_wallets';
     protected $guarded = [];
 
     public function ledgertrans()
