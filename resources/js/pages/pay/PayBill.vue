@@ -398,7 +398,7 @@ onMounted(() => {
                                 </div>
                                 <div v-else class="form-group">
                                     <label>Santri</label>
-                                    <p>Tunggu Sebentar ...</p>
+                                    <div class="spinner-grow text-primary"></div>
                                 </div>
                                 <div v-if="wallets.length!=0" class="form-group">
                                     <label>Dompet</label>
@@ -415,7 +415,7 @@ onMounted(() => {
                                 </div>
                                 <div v-else class="form-group">
                                     <label>Dompet</label>
-                                    <p>Tunggu Sebentar ...</p>
+                                    <div class="spinner-grow text-primary"></div>
                                 </div>
                                 <div class="form-group">
                                     <label>Jumlah Pembayaran</label><br>
