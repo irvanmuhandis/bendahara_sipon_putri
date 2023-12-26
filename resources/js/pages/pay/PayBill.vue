@@ -398,12 +398,12 @@ onMounted(() => {
                                 </div>
                                 <div v-else class="form-group">
                                     <label>Santri</label>
-                                    <div class="text-center">
-                                        <div class="spinner-grow text-primary"></div>
-                                        <div class="spinner-grow text-primary"></div>
-                                        <div class="spinner-grow text-primary"></div>
-                                        <div class="spinner-grow text-primary"></div>
-                                        <div class="spinner-grow text-primary"></div>
+                                    <div class="text-center m-2">
+                                        <div class="spinner-grow spinner-grow-sm mr-1 text-primary"></div>
+                                        <div class="spinner-grow spinner-grow-sm mr-1 text-primary"></div>
+                                        <div class="spinner-grow spinner-grow-sm mr-1 text-primary"></div>
+                                        <div class="spinner-grow spinner-grow-sm mr-1 text-primary"></div>
+                                        <div class="spinner-grow spinner-grow-sm mr-1 text-primary"></div>
                                     </div>
                                 </div>
                                 <div v-if="wallets.length != 0" class="form-group">
@@ -420,12 +420,12 @@ onMounted(() => {
                                 </div>
                                 <div v-else class="form-group">
                                     <label>Dompet</label>
-                                    <div class="text-center">
-                                        <div class="spinner-grow text-primary"></div>
-                                        <div class="spinner-grow text-primary"></div>
-                                        <div class="spinner-grow text-primary"></div>
-                                        <div class="spinner-grow text-primary"></div>
-                                        <div class="spinner-grow text-primary"></div>
+                                    <div class="text-center m-2">
+                                        <div class="spinner-grow spinner-grow-sm mr-1 text-primary"></div>
+                                        <div class="spinner-grow spinner-grow-sm mr-1 text-primary"></div>
+                                        <div class="spinner-grow spinner-grow-sm mr-1 text-primary"></div>
+                                        <div class="spinner-grow spinner-grow-sm mr-1 text-primary"></div>
+                                        <div class="spinner-grow spinner-grow-sm mr-1 text-primary"></div>
                                     </div>
                                 </div>
                                 <div class="form-group">
