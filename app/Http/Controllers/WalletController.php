@@ -30,7 +30,7 @@ class WalletController extends Controller
         }
 
         $wallets = Wallet::where('wallet_name', 'like', "%{$searchQuery}%")
-            ->select('created_at', 'id', 'wallet_name', 'wallet_type', 'debit', 'credit', DB::raw('(SELECT SUM(debit) - SUM(credit) FROM acc_wallets AS w2 WHERE w2.id <= acc_wallets.id AND w2.wallet_type = acc_wallets.wallet_type) AS saldo'))
+            ->select('created_at', 'id', 'wallet_name', 'wallet_type', 'debit', 'credit', DB::raw('(SELECT SUM(debit) - SUM(credit) FROM acc_wallets_girl AS w2 WHERE w2.id <= acc_wallets_girl.id AND w2.wallet_type = acc_wallets_girl.wallet_type) AS saldo'))
             ->orderBy($fil, $req)
             ->paginate(10);
 
@@ -41,7 +41,7 @@ class WalletController extends Controller
     {
         $wallets = Wallet::whereIn('id', function ($query) {
             $query->selectRaw('MAX(id)')
-                ->from('acc_wallets')
+                ->from('acc_wallets_girl')
                 ->groupBy('wallet_type');
         })
             ->get();

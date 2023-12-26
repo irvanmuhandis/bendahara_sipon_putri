@@ -230,7 +230,7 @@ const createPay = (event) => {
             .catch((error) => {
                 console.log(error);
                 toastr.error(error);
-            }) .finally(()=>{
+            }).finally(() => {
                 createLoad.value = false;
             })
     }
@@ -384,12 +384,12 @@ onMounted(() => {
 
                             </div>
                             <div class="col-md-6">
-                                <div v-if="santris.length!=0" class="form-group">
+                                <div v-if="santris.length != 0" class="form-group">
                                     <label>Santri</label>
-                                    <VueMultiselect v-model="formValue.santri" :option-height="9"
-                                        :multiple="false" @select="santrichange" :options="santris"
-                                        :class="{ 'is-invalid': errors.santri }" :close-on-select="true"
-                                        placeholder="Pilih Satu" label="fullname" track-by="nis" :show-labels="false">
+                                    <VueMultiselect v-model="formValue.santri" :option-height="9" :multiple="false"
+                                        @select="santrichange" :options="santris" :class="{ 'is-invalid': errors.santri }"
+                                        :close-on-select="true" placeholder="Pilih Satu" label="fullname" track-by="nis"
+                                        :show-labels="false">
                                         <template v-slot:option="{ option }">
                                             <div>{{ option.fullname }} - {{ option.nis }} </div>
                                         </template>
@@ -398,14 +398,19 @@ onMounted(() => {
                                 </div>
                                 <div v-else class="form-group">
                                     <label>Santri</label>
-                                    <div class="spinner-grow text-primary"></div>
+                                    <div class="text-center">
+                                        <div class="spinner-grow text-primary"></div>
+                                        <div class="spinner-grow text-primary"></div>
+                                        <div class="spinner-grow text-primary"></div>
+                                        <div class="spinner-grow text-primary"></div>
+                                        <div class="spinner-grow text-primary"></div>
+                                    </div>
                                 </div>
-                                <div v-if="wallets.length!=0" class="form-group">
+                                <div v-if="wallets.length != 0" class="form-group">
                                     <label>Dompet</label>
-                                    <VueMultiselect @click="getWallet" v-model="formValue.wallet" :option-height="9"
-                                        :options="wallets" :multiple="false" :class="{ 'is-invalid': errors.wallet }"
-                                        :close-on-select="true" placeholder="Pilih Satu" label="wallet_name" track-by="id"
-                                        :show-labels="false">
+                                    <VueMultiselect @click="getWallet" v-model="formValue.wallet" :option-height="9" :options="wallets"
+                                        :multiple="false" :class="{ 'is-invalid': errors.wallet }" :close-on-select="true"
+                                        placeholder="Pilih Satu" label="wallet_name" track-by="id" :show-labels="false">
                                         <template v-slot:option="{ option }">
                                             <div>{{ option.wallet_name }} </div>
                                         </template>
@@ -415,7 +420,13 @@ onMounted(() => {
                                 </div>
                                 <div v-else class="form-group">
                                     <label>Dompet</label>
-                                    <div class="spinner-grow text-primary"></div>
+                                    <div class="text-center">
+                                        <div class="spinner-grow text-primary"></div>
+                                        <div class="spinner-grow text-primary"></div>
+                                        <div class="spinner-grow text-primary"></div>
+                                        <div class="spinner-grow text-primary"></div>
+                                        <div class="spinner-grow text-primary"></div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Jumlah Pembayaran</label><br>
