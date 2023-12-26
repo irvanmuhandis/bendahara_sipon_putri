@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Wallet extends Model
 {
     use HasFactory;
-    
-    protected $table = 'acc_wallets';
+
+    protected $table = 'acc_wallets_girl';
     protected $guarded = [];
 
     public function ledgertrans()

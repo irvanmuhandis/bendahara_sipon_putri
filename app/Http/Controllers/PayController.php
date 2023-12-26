@@ -22,6 +22,9 @@ class PayController extends Controller
     public function index()
     {
         return  Pay::with(['wallet', 'user'])
+            ->whereHas('santri', function ($query) {
+                $query->where('option', 2);
+            })
             ->get();
     }
 
@@ -50,7 +53,7 @@ class PayController extends Controller
         $data = Pay::where('acc_pays.payable_type', '=', Debt::class)
             ->whereHas('santridebt', function ($query) use ($searchQuery) {
                 $query->where('fullname', 'like', "%{$searchQuery}%")
-                ->where('option',1);
+                    ->where('option', 1);
             })
             ->with(['payable.account', 'payable.santri', 'wallet', 'operator'])
             ->orderBy($fil, $req)
@@ -78,7 +81,7 @@ class PayController extends Controller
         $data = Pay::where('acc_pays.payable_type', '=', Bill::class)
             ->whereHas('santribill', function ($query) use ($searchQuery) {
                 $query->where('fullname', 'like', "%{$searchQuery}%")
-                ->where('option',1);
+                    ->where('option', 1);
             })
             ->with(['payable.account', 'payable.santri', 'wallet', 'operator'])
             ->orderBy($fil, $req)
