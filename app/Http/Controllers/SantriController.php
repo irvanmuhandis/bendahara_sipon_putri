@@ -42,7 +42,7 @@ class SantriController extends Controller
         $db = Bill::where('acc_bills.nis', '=', $id)
             ->where('acc_bills.payment_status', '<', 3)
             ->whereHas('santri', function ($query) {
-                $query->where('option', 1);
+                $query->where('option', 2);
             })
             ->with(['santri', 'account'])
             ->orderBy('acc_bills.month', 'desc')
@@ -57,7 +57,7 @@ class SantriController extends Controller
         $db = Debt::where('acc_debts.nis', '=', $id)
             ->where('acc_debts.payment_status', '<', 3)
             ->whereHas('santri', function ($query) {
-                $query->where('option', 1);
+                $query->where('option', 2);
             })
             ->with(['santri', 'account'])
             ->orderBy('acc_debts.created_at', 'desc')
