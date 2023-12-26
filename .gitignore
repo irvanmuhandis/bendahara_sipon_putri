@@ -9,10 +9,10 @@
 Homestead.json
 Homestead.yaml
 auth.json
-/routes
-/routes/web.php
-/app/Http/Controllers/ApplicationController.php
-/app/Http/Controllers/SantriController.php
+# /routes
+# /routes/web.php
+# /app/Http/Controllers/ApplicationController.php
+# /app/Http/Controllers/SantriController.php
 npm-debug.log
 yarn-error.log
 /.idea
