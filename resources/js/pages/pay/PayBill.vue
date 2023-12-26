@@ -301,9 +301,6 @@ watch(searchQuery, debounce(() => {
     fetchData();
 }, 300));
 
-watch(total, debounce(() => {
-    formValue.value.payment = total;
-}, 200));
 
 onMounted(() => {
     fetchData();
