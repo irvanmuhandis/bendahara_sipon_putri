@@ -307,6 +307,8 @@ watch(total, debounce(() => {
 
 onMounted(() => {
     fetchData();
+    getWallet();
+    getSantri();
 })
 </script>
 <template>
@@ -382,9 +384,9 @@ onMounted(() => {
 
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
+                                <div v-if="santris.length!=0" class="form-group">
                                     <label>Santri</label>
-                                    <VueMultiselect @click="getSantri" v-model="formValue.santri" :option-height="9"
+                                    <VueMultiselect v-model="formValue.santri" :option-height="9"
                                         :multiple="false" @select="santrichange" :options="santris"
                                         :class="{ 'is-invalid': errors.santri }" :close-on-select="true"
                                         placeholder="Pilih Satu" label="fullname" track-by="nis" :show-labels="false">
@@ -394,7 +396,11 @@ onMounted(() => {
                                     </VueMultiselect>
                                     <span class="invalid-feedback">{{ errors.santri }}</span>
                                 </div>
-                                <div class="form-group">
+                                <div v-else class="form-group">
+                                    <label>Santri</label>
+                                    <p>Tunggu Sebentar ...</p>
+                                </div>
+                                <div v-if="wallets.length!=0" class="form-group">
                                     <label>Dompet</label>
                                     <VueMultiselect @click="getWallet" v-model="formValue.wallet" :option-height="9"
                                         :options="wallets" :multiple="false" :class="{ 'is-invalid': errors.wallet }"
@@ -407,7 +413,10 @@ onMounted(() => {
 
                                     <span class="invalid-feedback">{{ errors.wallet }}</span>
                                 </div>
-
+                                <div v-else class="form-group">
+                                    <label>Dompet</label>
+                                    <p>Tunggu Sebentar ...</p>
+                                </div>
                                 <div class="form-group">
                                     <label>Jumlah Pembayaran</label><br>
                                     <span>Total Tagihan : {{ formatMoney(total, "Rp", 0) }}</span>
