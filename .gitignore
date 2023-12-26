@@ -10,8 +10,8 @@ Homestead.json
 Homestead.yaml
 auth.json
 /routes
-/routes/web
-/app/Http/Controllers/ApplicationController
+/routes/web.php
+/app/Http/Controllers/ApplicationController.php
 npm-debug.log
 yarn-error.log
 /.idea
