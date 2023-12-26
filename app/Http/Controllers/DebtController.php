@@ -22,9 +22,9 @@ class DebtController extends Controller
 
         $searchQuery = request('search');
         $debt = Santri::where('fullname', 'like', "%{$searchQuery}%")
+            ->where('option', 2)
             ->whereHas('debt', function ($query) {
-                $query->where('payment_status', '<', 3)
-                ->where('option',1);
+                $query->where('payment_status', '<', 3);
             })
             ->with(['debt' => function ($query) {
                 $query->where('payment_status', '<', 3);
@@ -48,13 +48,13 @@ class DebtController extends Controller
         //     'password' => 'required|min:8',
         // ]);
         $log = [];
-         $nis = json_decode(Cookie::get('sipon_session'))->nis;
+        $nis = json_decode(Cookie::get('sipon_session'))->nis;
         $token = json_decode(Cookie::get('sipon_session'))->token;
         $response = Http::withHeaders([
-                'Accept' => 'aplication/json',
-                'Authorization' => 'Bearer ' . $token,
-            ])->get('https://sipon.kyaigalangsewu.net/api/v1/user/'.$nis);
-        $operator=$response->json()['data'];
+            'Accept' => 'aplication/json',
+            'Authorization' => 'Bearer ' . $token,
+        ])->get('https://sipon.kyaigalangsewu.net/api/v1/user/' . $nis);
+        $operator = $response->json()['data'];
         foreach (request('santri') as $santri) {
 
 
@@ -112,10 +112,13 @@ class DebtController extends Controller
 
         $debts = Debt::query()
             ->with(['santri', 'operator', 'account'])
+            ->whereHas('santri',function ($query){
+                $query->where('option', 2);
+            })
             ->when($debtorName, function ($query) use ($debtorName) {
                 return $query->whereHas('santri', function ($q) use ($debtorName) {
                     $q->where('fullname', 'LIKE', "%$debtorName%")
-                    ->where('option',1);
+                        ->where('option', 2);
                 });
             })
             ->when($status, function ($query) use ($status) {
@@ -134,10 +137,10 @@ class DebtController extends Controller
     {
         Debt::whereIn('id', request('ids'))->delete();
         Ledger::where('ledgerable_type', '=', Debt::class)
-        ->whereIn('ledgerable_id', request('ids'))
-        ->delete();
+            ->whereIn('ledgerable_id', request('ids'))
+            ->delete();
         Wallet::whereIn('id', request('wall_ids'))
-        ->delete();
+            ->delete();
         return response()->json(['message' => 'Hutang berhasil dihapus!']);
     }
 
@@ -161,13 +164,13 @@ class DebtController extends Controller
         //     ]);
 
         $log = [];
- $nis = json_decode(Cookie::get('sipon_session'))->nis;
+        $nis = json_decode(Cookie::get('sipon_session'))->nis;
         $token = json_decode(Cookie::get('sipon_session'))->token;
         $response = Http::withHeaders([
-                'Accept' => 'aplication/json',
-                'Authorization' => 'Bearer ' . $token,
-            ])->get('https://sipon.kyaigalangsewu.net/api/v1/user/'.$nis);
-        $operator=$response->json()['data'];
+            'Accept' => 'aplication/json',
+            'Authorization' => 'Bearer ' . $token,
+        ])->get('https://sipon.kyaigalangsewu.net/api/v1/user/' . $nis);
+        $operator = $response->json()['data'];
         $debt = Debt::where('id', '=', request('id'))->first();
         $wallet = Wallet::where('id', '=', request('wallet_id'))->first();
         // dd(request());

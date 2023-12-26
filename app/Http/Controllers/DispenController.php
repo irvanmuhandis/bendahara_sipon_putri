@@ -28,7 +28,7 @@ class DispenController extends Controller
         }
         $bill = Dispen::whereHas('santri', function ($query) use ($searchQuery) {
             $query->where('fullname', 'like', "%{$searchQuery}%")
-            ->where('option',1);
+            ->where('option',2);
         })
             ->with(['santri'])
             ->orderBy($fil, $req)

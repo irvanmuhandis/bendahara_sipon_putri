@@ -72,7 +72,7 @@ class LedgerController extends Controller
             if ($debit == 1) {
                 $data = Pay::whereHas('santri', function ($query) use ($searchQuery) {
                     $query->where('fullname', 'like', "%{$searchQuery}%")
-                        ->where('option', "2");
+                        ->where('option', 2);
                 })
                     ->whereHas('payable')
                     ->with(['wallet', 'payable.account', 'santri', 'operator'])
@@ -81,7 +81,7 @@ class LedgerController extends Controller
             } else {
                 $data = Debt::whereHas('santri', function ($query) use ($searchQuery) {
                     $query->where('fullname', 'like', "%{$searchQuery}%")
-                        ->where('option', "2");
+                        ->where('option', 2);
                 })
                     ->with(['wallet', 'santri', 'operator'])
                     ->orderBy($fil, $req)->paginate(25);
@@ -310,14 +310,14 @@ class LedgerController extends Controller
 
     public function statistic()
     {
-        $debt = Debt::where('payment_status', '<', '3')->whereHas('santri', function ($query) {
+        $debt = Debt::where('payment_status', '<', 3)->whereHas('santri', function ($query) {
             $query->where('option', 2);
         })->count();
-        $bill = Bill::where('payment_status', '<', '3')->whereHas('santri', function ($query) {
+        $bill = Bill::where('payment_status', '<', 3)->whereHas('santri', function ($query) {
             $query->where('option', 2);
         })->count();
-        $santri = Santri::where('status', '1')->where('option', '2')->count();
-        $dispen = Dispen::where('status', '=', '1')->whereHas('santri', function ($query) {
+        $santri = Santri::where('status', 1)->where('option', 2)->count();
+        $dispen = Dispen::where('status', '=', 1)->whereHas('santri', function ($query) {
             $query->where('option', 2);
         })->count();
         return response()->json([
