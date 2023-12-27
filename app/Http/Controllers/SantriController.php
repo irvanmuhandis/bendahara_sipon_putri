@@ -71,14 +71,14 @@ class SantriController extends Controller
 
     public function list()
     {
-        // return Santri::select('nis','fullname','nickname')->where('option',2)->where('status',1)->orderBy('nis', 'desc')
-        //     ->get();
+        return Santri::select('nis','fullname','nickname')->where('option',2)->where('status',1)->orderBy('nis', 'desc')
+            ->get();
 
-        $data = Http::withHeaders([
-            'Authorization' => 'Bearer ' . json_decode(Cookie::get('sipon_session'))->token,
-            'Accept' => 'application/json'
-        ])->get('https://sipon.kyaigalangsewu.net/api/v1/santri/pi');
+        // $data = Http::withHeaders([
+        //     'Authorization' => 'Bearer ' . json_decode(Cookie::get('sipon_session'))->token,
+        //     'Accept' => 'application/json'
+        // ])->get('https://sipon.kyaigalangsewu.net/api/v1/santri/pi');
 
-        return $data['data'];
+        // return $data['data'];
     }
 }
