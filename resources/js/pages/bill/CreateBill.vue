@@ -11,6 +11,7 @@ const toastr = useToastr();
 const santris = ref([]);
 const groups = ref([]);
 const accounts = ref([]);
+const accountsNon = ref([]);
 const groupsantris = ref([]);
 
 const formatted = ref();
@@ -236,7 +237,7 @@ const validateBill = () => {
         }
     }
     else {
-        if (form.value.price == ''||form.value.period == null) {
+        if (form.value.price == '' || form.value.period == null) {
             errors.value.price = 'Pilih jumlah tagihan '
             err += 1;
         }
@@ -248,7 +249,7 @@ const validateBill = () => {
 
 
     if (!switchRange.value) {
-        if (form.value.period == ''||form.value.period == null) {
+        if (form.value.period == '' || form.value.period == null) {
             errors.value.period = 'Pilih Periode '
             err += 1;
         }
@@ -372,6 +373,16 @@ const getAccount = () => {
         .then((response) => {
             accounts.value = response.data;
         })
+
+    axios.get('/api/account/only', {
+        params: {
+            type: 4
+        }
+    }
+    )
+        .then((response) => {
+            accountsNon.value = response.data;
+        })
 }
 
 const getGroup = () => {
@@ -431,7 +442,7 @@ const AccChange_S = () => {
     form.value.account = null;
     form.value.periodic.forEach((element) => {
         element.value = '';
-      });
+    });
     form.value.price = '';
 }
 
@@ -476,15 +487,15 @@ onMounted(() => {
         <div class="container-fluid">
 
             <div class="card">
-                <!-- <div class="card-header p-2">
+                <div class="card-header p-2">
                     <ul class="nav nav-pills">
-                        <li class="nav-item"><a class="nav-link  active" href="#single" data-toggle="tab">Santri</a>
+                        <li class="nav-item"><a class="nav-link  active" href="#period" data-toggle="tab">Periodik</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="#group" data-toggle="tab">Grup
+                        <li class="nav-item"><a class="nav-link" href="#single" data-toggle="tab">Non Periodik
                             </a>
                         </li>
                     </ul>
-                </div> -->
+                </div>
                 <div class="card-body">
                     <div class="tab-content">
                         <div class="tab-pane" id="group">
@@ -494,7 +505,7 @@ onMounted(() => {
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Grup</label>
+                                            <label>Santri</label>
                                             <VueMultiselect :option-height="9" :options="groups" @select="groupchange"
                                                 :class="{ 'is-invalid': errors2.group }" v-model="form2.group"
                                                 :multiple="false" :close-on-select="true" placeholder="Pilih Satu ..."
@@ -549,30 +560,6 @@ onMounted(() => {
                                                 <input v-model="data.value" class="form-control" type="number" />
                                                 <p>{{ formatMoney(data.value) }}</p>
                                             </div>
-                                            <!-- <span>
-                                                <div class="form-group">
-                                                    <label
-                                                        class="text-right text-primary font-weight-normal">Syahriah</label>
-                                                    <Field :class="{ 'is-invalid': errors.syah }" @keyup="handleChange"
-                                                        class="form-control" name="syah" type="number" />
-                                                    <p>{{ formatSyah }}</p>
-                                                    <span class="invalid-feedback">{{ errors.syah }}</span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="text-right text-primary font-weight-normal">Madin</label>
-                                                    <Field :class="{ 'is-invalid': errors.madin }" @keyup="handleChange"
-                                                        class="form-control" name="madin" type="number" />
-                                                    <p>{{ formatMadin }}</p>
-                                                    <span class="invalid-feedback">{{ errors.madin }}</span>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="text-right text-primary font-weight-normal">Wifi</label>
-                                                    <Field :class="{ 'is-invalid': errors.wifi }" @keyup="handleChange"
-                                                        class="form-control" name="wifi" type="number" />
-                                                    <p>{{ formatWifi }}</p>
-                                                    <span class="invalid-feedback">{{ errors.wifi }}</span>
-                                                </div>
-                                            </span> -->
                                         </div>
                                         <div class="form-group">
                                             <label>Bulan</label>
@@ -638,7 +625,7 @@ onMounted(() => {
                         </div>
 
 
-                        <div class="tab-pane active" id="single">
+                        <div class="tab-pane active" id="period">
 
                             <form @submit="createBill_s">
                                 <div class="row">
@@ -741,6 +728,108 @@ onMounted(() => {
                             </form>
                         </div>
 
+                        <div class="tab-pane active" id="single">
+
+                            <form @submit="createBillNonPeriod">
+                                <div class="row">
+                                    <div class="col-md">
+                                        <div class="form-group">
+                                            <label>Santri</label>
+                                            <VueMultiselect v-model="form.santri" :option-height="9" :options="santris"
+                                                :class="{ 'is-invalid': errors.santri }" :multiple="true"
+                                                :close-on-select="false" placeholder="Pilih Satu / Lebih ..."
+                                                label="fullname" track-by="nis" :show-labels="false">
+                                                <template v-slot:option="{ option }">
+                                                    <div>{{ option.fullname }} - {{ option.nis }} </div>
+                                                </template>
+                                            </VueMultiselect>
+                                            <span class="invalid-feedback">{{ errors.santri }}</span>
+                                        </div>
+                                    </div>
+                                    <div v-if="!switchAcc_s" class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Jumlah Tagihan</label>
+                                            <input @keyup="handleChange_s" class="form-custom"
+                                                :class="{ 'is-invalid': errors.price }" v-model="form.price"
+                                                type="number" />
+                                            <span class="invalid-feedback">{{ errors.price }}</span>
+                                            <p>{{ formatted_s }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Akun</label><br>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" @change="AccChange_S" v-model="switchAcc_s"
+                                                    class="custom-control-input" id="customSwitch6">
+                                                <label class="font-weight-lighter font-italic custom-control-label"
+                                                    for="customSwitch6">Tunggal / Jamak</label>
+                                            </div>
+
+                                            <div v-if="!switchAcc_s">
+                                                <VueMultiselect v-model="form.account" :option-height="9"
+                                                    :options="accounts" :class="{ 'is-invalid': errors.account }"
+                                                    :multiple="false" :close-on-select="true" placeholder="Pilih Satu "
+                                                    label="account_name" track-by="id" :show-labels="false">
+                                                    <template v-slot:option="{ option }">
+                                                        <div>{{ option.account_name }} - {{ option.id }} </div>
+                                                    </template>
+                                                </VueMultiselect>
+                                                <span class="invalid-feedback">{{ errors.account }}</span>
+                                            </div>
+                                            <div v-else>
+                                                <div v-for="(data, index) in form.periodic">
+                                                    <label class="text-right text-primary font-weight-normal">{{
+                                                        data.name }}</label>
+                                                    <input :class="{ 'is-invalid': errors.account }" v-model="data.value"
+                                                        class="form-control" type="number" />
+                                                    <span>{{ formatMoney(data.value) }}</span>
+                                                    <span class="invalid-feedback">{{ errors.account }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Bulan</label>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" v-model="switchRange" @change="changeMonth_S"
+                                                    class="custom-control-input" id="customSwitch4">
+                                                <label class="font-weight-lighter font-italic custom-control-label"
+                                                    for="customSwitch4">Tunggal / Periode</label>
+                                            </div>
+                                            <div v-if="!switchRange">
+                                                <input @v-if="!switchRange" :class="{ 'is-invalid': errors.period }"
+                                                    class="form-custom" v-model="form.period" type="month" />
+                                                <span class="invalid-feedback">{{ errors.period }}</span>
+                                            </div>
+                                            <div v-else class="row">
+                                                <div class="col-md-6">
+                                                    <input class="form-custom"
+                                                        :class="{ 'is-invalid': errors.period_start }"
+                                                        v-model="form.period_start" type="month" />
+
+                                                    <span class="invalid-feedback">{{ errors.period_start }}</span>
+                                                </div>
+                                                <div class="col-md-6 mt-md-0 mt-2">
+                                                    <input class="form-custom" :class="{ 'is-invalid': errors.period_end }"
+                                                        v-model="form.period_end" type="month" />
+
+                                                    <span class="invalid-feedback">{{ errors.period_end }}</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="w-100 btn btn-primary">Submit</button>
+                            </form>
+                        </div>
 
                     </div>
 

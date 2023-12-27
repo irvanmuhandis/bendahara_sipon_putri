@@ -14,19 +14,6 @@ const props = defineProps({
 
 const emit = defineEmits(['accountDeleted', 'editAccount','confirmAccountDeletion']);
 
-
-
-const type = ref([
-    {
-        name: 'Insidental',
-        value: 1
-    },
-    {
-        name: 'Periodik',
-        value: 2,
-    }
-]);
-
 const changeRole = (account, role) => {
     axios.patch(`/api/accounts/${account.id}/change-role`, {
         role: role,
