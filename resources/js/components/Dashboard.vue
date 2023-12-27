@@ -289,13 +289,6 @@ function getInout() {
         'end': form.value.end,
     };
 
-
-
-
-
-
-
-
     axios.get('/api/inout', {
         params
     }).then(response => {
