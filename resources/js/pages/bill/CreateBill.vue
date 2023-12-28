@@ -491,9 +491,9 @@ onMounted(() => {
                     <ul class="nav nav-pills">
                         <li class="nav-item"><a class="nav-link  active" href="#period" data-toggle="tab">Periodik</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="#single" data-toggle="tab">Non Periodik
+                        <!-- <li class="nav-item"><a class="nav-link" href="#single" data-toggle="tab">Non Periodik
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
                 <div class="card-body">
@@ -625,7 +625,7 @@ onMounted(() => {
                         </div> -->
 
 
-                        <!-- <div class="tab-pane active" id="period">
+                        <div class="tab-pane active" id="period">
 
                             <form @submit="createBill_s">
                                 <div class="row">
@@ -726,9 +726,9 @@ onMounted(() => {
 
                                 <button type="submit" class="w-100 btn btn-primary">Submit</button>
                             </form>
-                        </div> -->
+                        </div>
 
-                        <div class="tab-pane active" id="single">
+                        <!-- <div class="tab-pane active" id="single">
 
                             <form @submit="createBillNonPeriod">
                                 <div class="row">
@@ -829,7 +829,7 @@ onMounted(() => {
 
                                 <button type="submit" class="w-100 btn btn-primary">Submit</button>
                             </form>
-                        </div>
+                        </div> -->
 
                     </div>
 
