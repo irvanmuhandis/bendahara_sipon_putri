@@ -498,9 +498,9 @@ onMounted(() => {
                 </div>
                 <div class="card-body">
                     <div class="tab-content">
-                        <div class="tab-pane" id="group">
-                            <!-- :validation-schema="!switchRange_g ? (!switchAcc ? createBillSchema : createBillSchema_mult) : (!switchAcc ? createBillSchema_r : createBillSchema_rMult)"
-                                v-slot:default="{ errors }" -->
+                        <!-- <div class="tab-pane" id="group">
+                             :validation-schema="!switchRange_g ? (!switchAcc ? createBillSchema : createBillSchema_mult) : (!switchAcc ? createBillSchema_r : createBillSchema_rMult)"
+                                v-slot:default="{ errors }"
                             <form @submit.prevent="createBill">
                                 <div class="row">
                                     <div class="col-md-6">
@@ -622,10 +622,10 @@ onMounted(() => {
                                 {{ errors2 }}
                             </form>
 
-                        </div>
+                        </div> -->
 
 
-                        <div class="tab-pane active" id="period">
+                        <!-- <div class="tab-pane active" id="period">
 
                             <form @submit="createBill_s">
                                 <div class="row">
@@ -726,7 +726,7 @@ onMounted(() => {
 
                                 <button type="submit" class="w-100 btn btn-primary">Submit</button>
                             </form>
-                        </div>
+                        </div> -->
 
                         <div class="tab-pane active" id="single">
 
