@@ -14,11 +14,8 @@ use Illuminate\Support\Facades\Cookie;
 
 class SantriController extends Controller
 {
-    // public function index()
-    // {
-    //     $users = Santri::latest()->paginate(20);
-    //     return $users;
-    // }
+    var $billTable = "accGirl_bills";
+    var $debtTable = "accGirl_debts";
 
     public function group($id)
     {
@@ -39,13 +36,13 @@ class SantriController extends Controller
 
     public function bill($id)
     {
-        $db = Bill::where('acc_bills.nis', '=', $id)
-            ->where('acc_bills.payment_status', '<', 3)
+        $db = Bill::where("{$this->billTable}.nis", '=', $id)
+            ->where("{$this->billTable}.payment_status", '<', 3)
             ->whereHas('santri', function ($query) {
                 $query->where('option', 2);
             })
             ->with(['santri', 'account'])
-            ->orderBy('acc_bills.month', 'desc')
+            ->orderBy("{$this->billTable}.month", 'desc')
             ->latest()->paginate(9);
 
 
@@ -54,13 +51,13 @@ class SantriController extends Controller
 
     public function debt($id)
     {
-        $db = Debt::where('acc_debts.nis', '=', $id)
-            ->where('acc_debts.payment_status', '<', 3)
+        $db = Debt::where("{$this->debtTable}.nis", '=', $id)
+            ->where("{$this->debtTable}.payment_status", '<', 3)
             ->whereHas('santri', function ($query) {
                 $query->where('option', 2);
             })
             ->with(['santri', 'account'])
-            ->orderBy('acc_debts.created_at', 'desc')
+            ->orderBy("{$this->debtTable}.created_at", 'desc')
             ->latest()->paginate(7);
 
         return response()->json($db);

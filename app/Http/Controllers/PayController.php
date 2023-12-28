@@ -17,8 +17,9 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Http;
 
 class PayController extends Controller
-
 {
+var $payTable = "accGirl_pays";
+
     public function index()
     {
         return  Pay::with(['wallet', 'user'])
@@ -50,7 +51,7 @@ class PayController extends Controller
                 $req = 'desc';
             }
         }
-        $data = Pay::where('acc_pays.payable_type', '=', Debt::class)
+        $data = Pay::where("{$this->payTable}.payable_type", '=', Debt::class)
             ->whereHas('santridebt', function ($query) use ($searchQuery) {
                 $query->where('fullname', 'like', "%{$searchQuery}%")
                     ->where('option', 2);
@@ -78,7 +79,7 @@ class PayController extends Controller
                 $req = 'desc';
             }
         }
-        $data = Pay::where('acc_pays.payable_type', '=', Bill::class)
+        $data = Pay::where("{$this->payTable}.payable_type", '=', Bill::class)
             ->whereHas('santribill', function ($query) use ($searchQuery) {
                 $query->where('fullname', 'like', "%{$searchQuery}%")
                     ->where('option', 2);

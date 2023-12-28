@@ -25,6 +25,12 @@ use function Database\Seeders\wallet;
 class MasterController extends Controller
 {
 
+    var $walletTable = "accGirl_wallets";
+    var $billTable = "accGirl_bills";
+    var $payTable = "accGirl_pays";
+
+
+
     public function index()
     {
         $fil = request('filter');
@@ -122,7 +128,7 @@ class MasterController extends Controller
             $end->setTime(0, 0, 0);
         }
         return Wallet::select(['created_at', 'id', 'wallet_name', 'wallet_type', 'debit', 'credit'])
-            ->selectRaw('(SELECT SUM(debit) - SUM(credit) FROM acc_wallets AS w2 WHERE w2.id <= acc_wallets.id AND w2.wallet_type = acc_wallets.wallet_type) AS saldo')
+            ->selectRaw("(SELECT SUM(debit) - SUM(credit) FROM {$this->walletTable} AS w2 WHERE w2.id <= {$this->walletTable}.id AND w2.wallet_type = {$this->walletTable}.wallet_type) AS saldo")
             ->whereBetween('created_at', [$start, $end])
             ->orderBy($fil, $req)
             ->paginate(10);
@@ -350,11 +356,11 @@ class MasterController extends Controller
                 $query->where('option', 2);
             })
             ->where('payable_type', Bill::class)
-            ->join('acc_bills', 'acc_bills.id', '=', 'acc_pays.payable_id')
-            ->whereBetween('acc_bills.month', [$strt->format('Y-m'), $ends->format('Y-m')])
+            ->join("{$this->billTable}", "{$this->billTable}.id", '=', "{$this->payTable}.payable_id")
+            ->whereBetween("{$this->billTable}.month", [$strt->format('Y-m'), $ends->format('Y-m')])
             ->select(
                 DB::raw('sum(payment) as `sum`'),
-                DB::raw("acc_bills.month as date")
+                DB::raw("{$this->billTable}.month as date")
             )
             ->groupByRaw('date')
             ->orderBy('date')
