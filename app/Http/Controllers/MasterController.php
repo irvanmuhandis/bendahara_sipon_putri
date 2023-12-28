@@ -129,45 +129,41 @@ class MasterController extends Controller
             $end->setTime(0, 0, 0);
         }
 
-        $pay = Pay::whereHas(['wallet', 'santri'])->with(['wallet', 'santri', 'payable'])->get();
-        $trans = Trans::whereHas('wallet')->with('wallet')->get();
-        $debt = Debt::whereHas('wallet')->with('wallet')->get();
-
         $pay = Pay::select('created_at')
             ->addSelect(DB::raw("0 as credit"))
             ->addSelect(DB::raw("payment as debit"))
             ->addSelect(DB::raw("'pay' as transaction_type"))
             ->addSelect(DB::raw("'income' as transaction_flow"))
             ->whereHas(['wallet', 'santri'])
-            ->with(['payable'=>function($query){
+            ->with(['payable' => function ($query) {
                 $query
-                ->when('payable_type',Bill::class,function ($queries){
-                    $queries->addSelect(DB::raw("month as sub_desc"));
-                })
-                ->when('payable_type',Debt::class,function ($queries){
-                    $queries->addSelect(DB::raw("title as sub_desc"));
-                });;
+                    ->when('payable_type', Bill::class, function ($queries) {
+                        $queries->addSelect(DB::raw("month as sub_desc"));
+                    })
+                    ->when('payable_type', Debt::class, function ($queries) {
+                        $queries->addSelect(DB::raw("title as sub_desc"));
+                    });;
             }])
-            ->with(['santri'=>function($query){
+            ->with(['santri' => function ($query) {
                 $query->select('nickname as santri');
             }])
-            ->with(['wallet'=>function ($query) use ($start,$end){
+            ->with(['wallet' => function ($query) use ($start, $end) {
                 $query->select(['created_at', 'id', 'wallet_name', 'wallet_type'])
-                ->selectRaw("(SELECT SUM(debit) - SUM(credit) FROM {$this->walletTable} AS w2 WHERE w2.id <= {$this->walletTable}.id AND w2.wallet_type = {$this->walletTable}.wallet_type) AS saldo")
-                ->whereBetween('created_at', [$start, $end]);
+                    ->selectRaw("(SELECT SUM(debit) - SUM(credit) FROM {$this->walletTable} AS w2 WHERE w2.id <= {$this->walletTable}.id AND w2.wallet_type = {$this->walletTable}.wallet_type) AS saldo")
+                    ->whereBetween('created_at', [$start, $end]);
             }])->get();
 
-        $trans = Trans::select('created_at', 'debit', 'credit','desc as sub_desc')
+        $trans = Trans::select(['created_at', 'debit', 'credit', 'desc as sub_desc'])
             ->addSelect(DB::raw("'trans' as transaction_type"))
             ->addSelect(DB::raw("CASE WHEN debit = 0 THEN 'expense' ELSE 'income' END as transaction_flow"))
-            ->whereHas(['operator','wallet'])
-            ->with(['operator'=>function($query){
+            ->whereHas(['operator', 'wallet'])
+            ->with(['operator' => function ($query) {
                 $query->select('nickname as santri');
             }])
-            ->with(['wallet'=>function ($query) use ($start,$end){
+            ->with(['wallet' => function ($query) use ($start, $end) {
                 $query->select(['created_at', 'id', 'wallet_name', 'wallet_type'])
-                ->selectRaw("(SELECT SUM(debit) - SUM(credit) FROM {$this->walletTable} AS w2 WHERE w2.id <= {$this->walletTable}.id AND w2.wallet_type = {$this->walletTable}.wallet_type) AS saldo")
-                ->whereBetween('created_at', [$start, $end]);
+                    ->selectRaw("(SELECT SUM(debit) - SUM(credit) FROM {$this->walletTable} AS w2 WHERE w2.id <= {$this->walletTable}.id AND w2.wallet_type = {$this->walletTable}.wallet_type) AS saldo")
+                    ->whereBetween('created_at', [$start, $end]);
             }])->get();
 
         $debt = Debt::select('created_at')
@@ -176,19 +172,19 @@ class MasterController extends Controller
             ->addSelect(DB::raw("'debt' as transaction_type"))
             ->addSelect(DB::raw("'expense' as transaction_flow"))
             ->addSelect(DB::raw("title as sub_desc"))
-            ->whereHas(['santri','wallet'])
-            ->with(['santri'=>function($query){
+            ->whereHas(['santri', 'wallet'])
+            ->with(['santri' => function ($query) {
                 $query->select('nickname as santri');
             }])
-            ->with(['wallet'=>function ($query) use ($start,$end){
+            ->with(['wallet' => function ($query) use ($start, $end) {
                 $query->select(['created_at', 'id', 'wallet_name', 'wallet_type'])
-                ->selectRaw("(SELECT SUM(debit) - SUM(credit) FROM {$this->walletTable} AS w2 WHERE w2.id <= {$this->walletTable}.id AND w2.wallet_type = {$this->walletTable}.wallet_type) AS saldo")
-                ->whereBetween('created_at', [$start, $end]);
+                    ->selectRaw("(SELECT SUM(debit) - SUM(credit) FROM {$this->walletTable} AS w2 WHERE w2.id <= {$this->walletTable}.id AND w2.wallet_type = {$this->walletTable}.wallet_type) AS saldo")
+                    ->whereBetween('created_at', [$start, $end]);
             }])->get();
 
         $combinedResults = $pay->union($trans)->union($debt)
-        ->orderBy($fil, $req)
-        ->paginate($page_num);
+            ->orderBy($fil, $req)
+            ->paginate($page_num);
 
 
         return $combinedResults;
