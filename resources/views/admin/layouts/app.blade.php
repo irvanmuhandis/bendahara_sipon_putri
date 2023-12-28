@@ -110,7 +110,7 @@
                                         </p>
                                     </router-link>
                                 </li>
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <router-link to="/admin/report/money"
                                         :class="$route.path.startsWith('/admin/money') ? 'active' : ''"
                                         active-class="active" class="nav-link">
@@ -119,7 +119,7 @@
                                             Keuangan
                                         </p>
                                     </router-link>
-                                </li>
+                                </li> --}}
                             </ul>
                         </li>
 
