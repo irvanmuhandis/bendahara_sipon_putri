@@ -22,7 +22,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 use function Database\Seeders\wallet;
 
-class LedgerController extends Controller
+class MasterController extends Controller
 {
 
     public function index()
@@ -121,12 +121,8 @@ class LedgerController extends Controller
             $end->format('Y-m-d H:i:s');
             $end->setTime(0, 0, 0);
         }
-        return Ledger::with(['ledgerable', 'ledgerable.santri'])
-            ->with(['ledgerable.wallet' => function ($query) {
-                $query
-                    ->select(['created_at', 'id', 'wallet_name', 'wallet_type', 'debit', 'credit'])
-                    ->selectRaw('(SELECT SUM(debit) - SUM(credit) FROM acc_wallets AS w2 WHERE w2.id <= acc_wallets.id AND w2.wallet_type = acc_wallets.wallet_type) AS saldo');
-            }])
+        return Wallet::select(['created_at', 'id', 'wallet_name', 'wallet_type', 'debit', 'credit'])
+            ->selectRaw('(SELECT SUM(debit) - SUM(credit) FROM acc_wallets AS w2 WHERE w2.id <= acc_wallets.id AND w2.wallet_type = acc_wallets.wallet_type) AS saldo')
             ->whereBetween('created_at', [$start, $end])
             ->orderBy($fil, $req)
             ->paginate(10);
@@ -134,11 +130,11 @@ class LedgerController extends Controller
 
     public function show($id)
     {
-        $data = Ledger::find($id)->ledgerable_type;
-        if ($data == "App\\Models\\Pay") {
-            $ledger = Ledger::with(['ledgerable.wallet', 'ledgerable.operator', 'ledgerable.payable.account', 'ledgerable.santri'])->findOrFail($id);
+        $mode = request('mode');
+        if ($mode == Pay::class) {
+            $ledger = Pay::with(['wallet', 'operator', 'payable.account', 'santri'])->findOrFail($id);
         } else {
-            $ledger = Ledger::with(['ledgerable.wallet', 'ledgerable.operator', 'ledgerable.account'])->findOrFail($id);
+            $ledger = Trans::with(['wallet', 'operator', 'account'])->findOrFail($id);
         }
 
         return $ledger;
@@ -246,7 +242,7 @@ class LedgerController extends Controller
             ->get();
 
         $other = Account::where('account_type', '=', 3)
-        ->whereHas('trans')
+            ->whereHas('trans')
             ->withSum(['trans' => function ($query) use ($strt, $ends) {
                 $query->whereBetween('created_at', [$strt, $ends]);
             }], 'debit')
@@ -297,7 +293,7 @@ class LedgerController extends Controller
             ->get();
 
         $other = Account::where('account_type', '=', 3)
-        ->whereHas('trans')
+            ->whereHas('trans')
             ->withSum('trans', 'debit')
             ->withSum('trans', 'credit')
             ->get();

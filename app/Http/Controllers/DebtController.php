@@ -77,14 +77,8 @@ class DebtController extends Controller
             ]);
 
 
-            $ledger = Ledger::create([
-                'ledgerable_id' => $debt->id,
-                'ledgerable_type' => Debt::class,
-            ]);
-
             array_push($log, $debt);
             array_push($log, $wallet);
-            array_push($log, $ledger);
         }
 
 
@@ -136,9 +130,7 @@ class DebtController extends Controller
     public function bulkDelete()
     {
         Debt::whereIn('id', request('ids'))->delete();
-        Ledger::where('ledgerable_type', '=', Debt::class)
-            ->whereIn('ledgerable_id', request('ids'))
-            ->delete();
+
         Wallet::whereIn('id', request('wall_ids'))
             ->delete();
         return response()->json(['message' => 'Hutang berhasil dihapus!']);
@@ -148,9 +140,7 @@ class DebtController extends Controller
     {
         Debt::where('id', request('id'))->delete();
         Wallet::where('id', request('wallet_id'))->delete();
-        Ledger::where('ledgerable_id', '=', request('id'))
-            ->where('ledgerable_type', '=', Debt::class)
-            ->delete();
+
 
         return response()->noContent();
     }

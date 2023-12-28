@@ -170,16 +170,9 @@ class PayController extends Controller
                 'payable_type' => Bill::class,
                 'operator_id' => $operator['id'],
             ]);
-            //inser ke buku besar
 
-            $ledger = Ledger::create([
-                'ledgerable_id' => $i->id,
-
-                'ledgerable_type' => Pay::class
-            ]);
             array_push($log, $i);
             array_push($log, $p);
-            array_push($log, $ledger);
             array_push($log, $wallet);
         } else {
             foreach ($map as $item) {
@@ -225,15 +218,10 @@ class PayController extends Controller
                 ]);
                 //inser ke buku besar
 
-                $ledger = Ledger::create([
-                    'ledgerable_id' => $i->id,
 
-                    'ledgerable_type' => Pay::class
-                ]);
 
                 array_push($log, $i);
                 array_push($log, $p);
-                array_push($log, $ledger);
                 array_push($log, $wallet);
             }
         }
@@ -323,13 +311,9 @@ class PayController extends Controller
             ]);
             //inser ke buku besar
 
-            $ledger = Ledger::create([
-                'ledgerable_id' => $i->id,
-                'ledgerable_type' => Pay::class
-            ]);
+
             array_push($log, $i);
             array_push($log, $p);
-            array_push($log, $ledger);
             array_push($log, $wallet);
         } else {
             foreach ($map as $item) {
@@ -370,16 +354,10 @@ class PayController extends Controller
                     'payable_type' => Debt::class,
                     'operator_id' => $operator['id']
                 ]);
-                //insert buku besar
 
-                $big = Ledger::create([
-                    'ledgerable_id' => $q->id,
-                    'ledgerable_type' => Pay::class,
-                ]);
 
                 array_push($log, $q);
                 array_push($log, $p);
-                array_push($log, $big);
                 array_push($log, $wallet);
             }
         }
@@ -409,7 +387,7 @@ class PayController extends Controller
         $data = '';
         $pay = Pay::where('id', '=', request('id'))->first();
         $wallet = Wallet::where('id', '=', request('wallet')['id'])->first();
-        $ledger = Ledger::where('ledgerable_id', request('id'))->first();
+
         if (request('type') == Bill::class) {
             $data = Bill::where('id', '=', request('bill')['id'])->first();
         } else {
@@ -434,10 +412,7 @@ class PayController extends Controller
             'updated_at' => request('date'),
             'payment' => request('paymentAft'),
         ]);
-        $ledger->update([
-            'created_at' => request('date'),
-            'updated_at' => request('date')
-        ]);
+
         $wallet->update([
             'debit' => request('paymentAft'),
             'credit' => 0,
@@ -445,7 +420,6 @@ class PayController extends Controller
         array_push($log, $pay);
         array_push($log, $data);
         array_push($log, $wallet);
-        array_push($log, $ledger);
         return $log;
     }
     public function bulkDelete()
@@ -465,24 +439,14 @@ class PayController extends Controller
 
 
             $pay = Pay::where('id', $update['id'])->delete();
-            $ledger = Ledger::where('ledgerable_type', '=', Pay::class)
-                ->where('ledgerable_id', $update['id'])
-                ->delete();
             $wallet = Wallet::where('id', request('wall_ids'))
                 ->delete();
             array_push($log, $data);
             array_push($log, $pay);
-            array_push($log, $ledger);
             array_push($log, $wallet);
         }
 
         return $log;
-    }
-    public function destroy($id)
-    {
-        $r = Pay::where('id', '=', $id)->delete();
-
-        return response()->json();
     }
 
     public function search()

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Debt extends Model
 {
     use HasFactory;
-    protected $table = 'acc_debts';
+    protected $table = 'accGirl_debts';
     protected $guarded = [];
 
     public function santri()
@@ -42,12 +42,8 @@ class Debt extends Model
         return $this->belongsTo(Wallet::class);
     }
 
-    public function ledger()
-    {
-        return $this->morphOne(Ledger::class, 'ledgerable');
-    }
 
-   
+
 
 
 }

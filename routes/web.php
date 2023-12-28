@@ -19,6 +19,7 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\Status\PayStatusController;
 use App\Http\Controllers\Admin\AppointStatusController;
+use App\Http\Controllers\MasterController;
 use App\Http\Controllers\SantriController;
 use App\Models\Ledger;
 use App\Models\Santri;
@@ -92,13 +93,13 @@ Route::middleware('sipon')->group(function () {
     Route::get('/api/dispens/search', [DispenController::class, 'search']);
     Route::delete('/api/dispens', [DispenController::class, 'bulkDelete']);
 
-    Route::get('/api/ledger', [LedgerController::class, 'index']);
-    Route::get('/api/ledger/circul', [LedgerController::class, 'circulation']);
-    Route::get('/api/ledger/{id}', [LedgerController::class, 'show']);
-    Route::get('/api/ledger/billing/search', [LedgerController::class, 'billing']);
-    Route::get('/api/inout', [LedgerController::class, 'inout']);
-    Route::get('/api/accsum', [LedgerController::class, 'accountSum']);
-    Route::get('/api/stat', [LedgerController::class, 'statistic']);
+    Route::get('/api/ledger', [MasterController::class, 'index']);
+    Route::get('/api/ledger/circul', [MasterController::class, 'circulation']);
+    Route::get('/api/ledger/{id}', [MasterController::class, 'show']);
+    Route::get('/api/ledger/billing/search', [MasterController::class, 'billing']);
+    Route::get('/api/inout', [MasterController::class, 'inout']);
+    Route::get('/api/accsum', [MasterController::class, 'accountSum']);
+    Route::get('/api/stat', [MasterController::class, 'statistic']);
 
     Route::get('/api/account/only', [AccountController::class, 'only']);
     Route::get('/api/account/list', [AccountController::class, 'list']);

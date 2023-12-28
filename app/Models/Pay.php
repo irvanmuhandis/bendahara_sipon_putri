@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Pay extends Model
 {
     use HasFactory;
-    protected $table = 'acc_pays';
+    protected $table = 'accGirl_pays';
     protected $guarded = [];
 
     public function santri()
@@ -37,10 +37,10 @@ class Pay extends Model
    return $this->hasOneThrough(
             Santri::class,
             User::class,
-            'id', 
-            'nis', 
-            'operator_id', 
-            'nis_santri' 
+            'id',
+            'nis',
+            'operator_id',
+            'nis_santri'
         );
     }
 
@@ -92,8 +92,5 @@ class Pay extends Model
         );;
     }
 
-    public function ledger()
-    {
-        return $this->morphOne(Ledger::class, 'ledgerable');
-    }
+
 }

@@ -22,18 +22,12 @@ import ListBill from "./pages/list/ListBill.vue";
 import ArrearReport from "./pages/report/ArrearsReport.vue";
 import MoneyReport from "./pages/report/MoneyReport.vue";
 
-import DetailLedger from "./pages/ledger/DetailLedger.vue";
 
 export default [
   {
         path: "/",
         name: "admin.dashboard",
         component: Dashboard,
-    },
-    {
-        path: "/admin/ledger/:id",
-        name: "admin.ledger.detail",
-        component: DetailLedger,
     },
     {
         path: "/admin/report/money",

@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Bill extends Model
 {
     use HasFactory;
-    protected $table = 'acc_bills';
+    protected $table = 'accGirl_bills';
     protected $guarded = [];
 
 
@@ -38,10 +38,10 @@ class Bill extends Model
             return $this->hasOneThrough(
             Santri::class,
             User::class,
-            'id', 
-            'nis', 
-            'operator_id', 
-            'nis_santri' 
+            'id',
+            'nis',
+            'operator_id',
+            'nis_santri'
         );;
     }
 
