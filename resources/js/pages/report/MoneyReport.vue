@@ -55,7 +55,7 @@ const errors = ref({
 
 async function getInout(params) {
 
-    axios.get('/api/accsum',{
+    axios.get('/api/accsum', {
         params
     })
         .then(response => {
@@ -351,17 +351,15 @@ onMounted(() => {
                         <tbody>
                             <tr v-for="(data, index) in listCircul.data" class="text-center" :key="data.id">
 
-                                <td>{{ index + 1 }}
-                                </td>
-                                <td>{{ formatDateTimestamp(data.created_at) }}</td>
-                                <!-- pemasukan -->
+                                <!-- <td>{{ formatDateTimestamp(data.created_at) }}</td>
+
                                 <td v-if="data.ledgerable_type == 'App\\Models\\Pay'"
                                     v-html="formatMoney_2(data.ledgerable.payment, 1)"></td>
                                 <td v-if="data.ledgerable_type == 'App\\Models\\Debt'">-</td>
                                 <td v-if="data.ledgerable_type == 'App\\Models\\Trans'"
                                     v-html="data.ledgerable.debit == 0 ? `-` : formatMoney_2(data.ledgerable.debit, 1)">
                                 </td>
-                                <!-- pengeluaran -->
+
                                 <td v-if="data.ledgerable_type == 'App\\Models\\Pay'">-</td>
                                 <td v-if="data.ledgerable_type == 'App\\Models\\Debt'"
                                     v-html="formatMoney_2(data.ledgerable.amount, 2)"></td>
@@ -378,7 +376,14 @@ onMounted(() => {
                                 <td v-if="data.ledgerable_type == 'App\\Models\\Debt'">Hutang
                                     {{ formatlowerCase(data.ledgerable.title) + ' ' + data.ledgerable.santri.fullname }}
                                 </td>
-                                <td v-if="data.ledgerable_type == 'App\\Models\\Trans'">{{ data.ledgerable.desc }}</td>
+                                <td v-if="data.ledgerable_type == 'App\\Models\\Trans'">{{ data.ledgerable.desc }}</td> -->
+                                <td>{{ index + 1 }}</td>
+                                <td>{{ formatDateTimestamp(data.created_at) }}</td>
+                                <td>{{ formatMoney_2(data.ledgerable.debit, 1) }}</td>
+                                <td>{{ formatMoney_2(data.ledgerable.credit, 2) }}</td>
+                                <td>{{ formatMoney(data.wallet_name) }}</td>
+                                <td>{{ formatMoney(data.saldo) }}</td>
+                                <td>{{ formatMoney(data.sub_desc) }}</td>
                             </tr>
                             <tr class="text-center" v-if="listCircul.data.length == 0">
                                 <td colspan="8">Tidak ada data</td>
