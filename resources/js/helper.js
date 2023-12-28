@@ -83,11 +83,18 @@ export function formatStatus(value) {
 
 export function formatStatusDispen(value) {
     switch (value) {
-        case "0"||0:
+        case "0":
             return `<div class="badge badge-danger">NON AKTIF</div>`;
             break;
 
-        case "1"||1:
+        case "1":
+            return `<div class="badge badge-warning">AKTIF</div>`;
+            break;
+        case 0:
+            return `<div class="badge badge-danger">NON AKTIF</div>`;
+            break;
+
+        case 1:
             return `<div class="badge badge-warning">AKTIF</div>`;
             break;
         default:
@@ -95,8 +102,6 @@ export function formatStatusDispen(value) {
             break;
     }
 }
-
-
 
 export function formatBg(value) {
     const color = [
