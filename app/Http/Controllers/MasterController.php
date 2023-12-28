@@ -155,7 +155,7 @@ class MasterController extends Controller
                 $query->select(['created_at', 'id', 'wallet_name', 'wallet_type'])
                 ->selectRaw("(SELECT SUM(debit) - SUM(credit) FROM {$this->walletTable} AS w2 WHERE w2.id <= {$this->walletTable}.id AND w2.wallet_type = {$this->walletTable}.wallet_type) AS saldo")
                 ->whereBetween('created_at', [$start, $end]);
-            }]);
+            }])->get();
 
         $trans = Trans::select('created_at', 'debit', 'credit','desc as sub_desc')
             ->addSelect(DB::raw("'trans' as transaction_type"))
@@ -168,7 +168,7 @@ class MasterController extends Controller
                 $query->select(['created_at', 'id', 'wallet_name', 'wallet_type'])
                 ->selectRaw("(SELECT SUM(debit) - SUM(credit) FROM {$this->walletTable} AS w2 WHERE w2.id <= {$this->walletTable}.id AND w2.wallet_type = {$this->walletTable}.wallet_type) AS saldo")
                 ->whereBetween('created_at', [$start, $end]);
-            }]);
+            }])->get();
 
         $debt = Debt::select('created_at')
             ->addSelect(DB::raw("debt as credit"))
@@ -184,7 +184,7 @@ class MasterController extends Controller
                 $query->select(['created_at', 'id', 'wallet_name', 'wallet_type'])
                 ->selectRaw("(SELECT SUM(debit) - SUM(credit) FROM {$this->walletTable} AS w2 WHERE w2.id <= {$this->walletTable}.id AND w2.wallet_type = {$this->walletTable}.wallet_type) AS saldo")
                 ->whereBetween('created_at', [$start, $end]);
-            }]);
+            }])->get();
 
         $combinedResults = $pay->union($trans)->union($debt)
         ->orderBy($fil, $req)
