@@ -70,10 +70,12 @@ class BillController extends Controller
                 ->where('option', 2);
         })
             ->when($mode == 'period', function ($query) {
-                $query->where('title', null);
+                $query->where('title', null)
+                    ->orWhere('title', "");
             })
             ->when($mode == 'nonperiod', function ($query) {
-                $query->where('month', null);
+                $query->where('month', null)
+                    ->orWhere('month', null);
             })
             ->with(['santri', 'operator', 'account'])
             ->orderBy($fil, $req)
