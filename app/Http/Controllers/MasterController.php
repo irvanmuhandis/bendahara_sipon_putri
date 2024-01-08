@@ -27,9 +27,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class MasterController extends Controller
 {
 
-    var $walletTable = "acc_wallets";
-    var $billTable = "acc_bills";
-    var $payTable = "acc_pays";
+    var $walletTable = "accGirl_wallets";
+    var $billTable = "accGirl_bills";
+    var $payTable = "accGirl_pays";
 
 
 

@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Pay extends Model
 {
     use HasFactory;
-    protected $table = 'acc_pays';
+    protected $table = 'accGirl_pays';
     protected $guarded = [];
 
     public function santri()

@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Cookie;
 
 class SantriController extends Controller
 {
-    var $billTable = "acc_bills";
-    var $debtTable = "acc_debts";
+    var $billTable = "accGirl_bills";
+    var $debtTable = "accGirl_debts";
 
     public function group($id)
     {

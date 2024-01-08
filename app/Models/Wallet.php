@@ -9,7 +9,7 @@ class Wallet extends Model
 {
     use HasFactory;
 
-    protected $table = 'acc_wallets';
+    protected $table = 'accGirl_wallets';
     protected $guarded = [];
 
 

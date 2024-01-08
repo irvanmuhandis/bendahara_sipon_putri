@@ -12,7 +12,7 @@ use Illuminate\Console\View\Components\Warn;
 class WalletController extends Controller
 {
 
-    var  $tableName = "acc_wallets";
+    var  $tableName = "accGirl_wallets";
 
     public function index()
     {
