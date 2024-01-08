@@ -1,0 +1,35 @@
+{
+  "resources/js/app.js": {
+    "file": "assets/app.59f8e6b3.js",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "node_modules/dompurify/dist/purify.es.js",
+      "node_modules/canvg/lib/index.es.js"
+    ],
+    "css": [
+      "assets/app.4f28b225.css"
+    ],
+    "assets": [
+      "assets/kop_surat.9946a360.png"
+    ]
+  },
+  "node_modules/dompurify/dist/purify.es.js": {
+    "file": "assets/purify.es.0f2e43f6.js",
+    "src": "node_modules/dompurify/dist/purify.es.js",
+    "isDynamicEntry": true
+  },
+  "node_modules/canvg/lib/index.es.js": {
+    "file": "assets/index.es.16c18a37.js",
+    "src": "node_modules/canvg/lib/index.es.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "resources/js/app.js"
+    ]
+  },
+  "resources/css/app.css": {
+    "file": "assets/app.0af0472f.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  }
+}
