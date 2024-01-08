@@ -11,7 +11,7 @@ class Account extends Model
 {
     use HasFactory;
 
-    protected $table = 'accGirl_accounts';
+    protected $table = 'acc_accounts';
     protected $guarded = [];
 
     public function bill()

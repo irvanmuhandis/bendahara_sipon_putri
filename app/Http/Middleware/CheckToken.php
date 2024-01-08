@@ -25,8 +25,8 @@ class CheckToken
 
                 Cookie::queue('sipon_session', Crypt::decryptString($request->data), 10080);
 
-                //https://psb.kyaigalangsewu.net/
-                return redirect('https://keuanganputri.kyaigalangsewu.net');
+                // return redirect('https://keuanganputri.kyaigalangsewu.net');
+                return redirect('http://127.0.0.1:8200');
             }
 
             $token = json_decode(Cookie::get('sipon_session'))->token;
@@ -52,10 +52,9 @@ class CheckToken
 
                 Cookie::queue('sipon_session', Crypt::decryptString($request->data), 10080);
 
-                //https://psb.kyaigalangsewu.net/
-                return redirect('https://keuanganputri.kyaigalangsewu.net');
+                // return redirect('https://keuanganputri.kyaigalangsewu.net');
+                return redirect('http://127.0.0.1:8200');
             } else {
-                //https://sipon.kyaigalangsewu.net/
                 return redirect('https://sipon.kyaigalangsewu.net');
             }
         }

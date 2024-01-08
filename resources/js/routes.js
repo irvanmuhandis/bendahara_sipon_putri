@@ -22,12 +22,18 @@ import ListBill from "./pages/list/ListBill.vue";
 import ArrearReport from "./pages/report/ArrearsReport.vue";
 import MoneyReport from "./pages/report/MoneyReport.vue";
 
+import BillPdf from "./components/billPdf.vue";
 
 export default [
   {
         path: "/",
         name: "admin.dashboard",
         component: Dashboard,
+    },
+    {
+        path: "/billPdf",
+        name: "bill.pdf",
+        component: BillPdf,
     },
     {
         path: "/admin/report/money",

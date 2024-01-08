@@ -2,32 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
+use Carbon\Carbon;
 use App\Models\Pay;
 use App\Models\Bill;
+use App\Models\Debt;
 use App\Models\User;
 use App\Models\Trans;
-use App\Models\Ledger;
-use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
-use App\Models\Account;
-use App\Models\Debt;
 use App\Models\Dispen;
+use App\Models\Ledger;
 use App\Models\Santri;
 use App\Models\Wallet;
-use Carbon\Carbon;
-use DateTime;
-use Illuminate\Pagination\LengthAwarePaginator;
+use App\Models\Account;
+use Barryvdh\DomPDF\PDF;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
+use App\Http\Controllers\Controller;
 use function Database\Seeders\wallet;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class MasterController extends Controller
 {
 
-    var $walletTable = "accGirl_wallets";
-    var $billTable = "accGirl_bills";
-    var $payTable = "accGirl_pays";
+    var $walletTable = "acc_wallets";
+    var $billTable = "acc_bills";
+    var $payTable = "acc_pays";
 
 
 
@@ -210,9 +212,10 @@ class MasterController extends Controller
 
 
         $query = Santri::where('fullname', 'like', "%{$searchQuery}%")
+            ->select('fullname', 'nis')
             ->where('option', '2')
             ->with('bill.account')
-            ->withCount(['bill as bill_count' => function ($bill) use ($account) {
+            ->withCount(['bill as bill_count' => function ($bill) use ($account){
                 $bill
                     ->select(DB::raw('count(distinct(month))'))
                     ->whereBetween('month', [request('start'), request('end')])
@@ -244,6 +247,40 @@ class MasterController extends Controller
             ->get();
 
 
+        $sum = $query->sum('sum_remain');
+        return response()->json([
+            'data' => $query,
+            'sum' => $sum
+        ]);
+    }
+
+    public function billingPdf()
+    {
+        $nis = request('santri');
+
+
+        $query = Santri::where('nis',$nis)
+            ->select('fullname', 'nis')
+            ->where('option', '2')
+            ->with(['bill' => function ($query){
+                $query->selectRaw('month,nis,sum(amount) as sum_amount,sum(remainder) as sum_remain,count(id) as count')
+                    ->whereBetween('month', [request('start'), request('end')])
+                    ->where('payment_status', '<', 3)
+                    ->groupBy('month')
+                    ->groupBy('nis')
+                    ->orderBy('month');
+            }])
+            ->withSum(['bill as sum_remain' => function ($bill) {
+                $bill
+                    ->whereBetween('month', [request('start'), request('end')])
+                    ->where('payment_status', '<', 3);
+            }], 'remainder')
+            ->withSum(['bill as sum_amount' => function ($bill) {
+                $bill
+                    ->whereBetween('month', [request('start'), request('end')])
+                    ->where('payment_status', '<', 3);
+            }], 'amount')
+            ->get();
         $sum = $query->sum('sum_remain');
         return response()->json([
             'data' => $query,

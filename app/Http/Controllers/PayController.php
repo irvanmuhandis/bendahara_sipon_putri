@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Http;
 
 class PayController extends Controller
 {
-var $payTable = "accGirl_pays";
+var $payTable = "acc_pays";
 
     public function index()
     {

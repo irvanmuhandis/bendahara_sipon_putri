@@ -11,14 +11,16 @@ class ApplicationController extends Controller
 {
     public function __invoke()
     {
-        $nis = json_decode(Cookie::get('sipon_session'))->nis;
-        $token = json_decode(Cookie::get('sipon_session'))->token;
-        $response = Http::withHeaders([
+
+            $nis = json_decode(Cookie::get('sipon_session'))->nis;
+            $token = json_decode(Cookie::get('sipon_session'))->token;
+            $response = Http::withHeaders([
                 'Accept' => 'aplication/json',
                 'Authorization' => 'Bearer ' . $token,
-            ])->get('https://sipon.kyaigalangsewu.net/api/v1/santri/'.$nis);
-        $santri=$response->json()['data'];
-        return view('admin.layouts.app',['operator'=>$santri]);
+            ])->get('https://sipon.kyaigalangsewu.net/api/v1/santri/' . $nis);
+            $santri = $response->json()['data'];
+            return view('admin.layouts.app', ['operator' => $santri]);
+
         // return view('admin.layouts.app',['operator'=>['nickname'=>'Irvan']]);
     }
 
@@ -30,8 +32,6 @@ class ApplicationController extends Controller
         $request->session()->forget('sipon_session');
         Cookie::queue(Cookie::make('sipon_session', null, -1));
         return redirect('login');
-
-        return;
     }
 
     function getOperator(Request $request)

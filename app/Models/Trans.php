@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Trans extends Model
 {
     use HasFactory;
-    protected $table = 'accGirl_trans';
+    protected $table = 'acc_trans';
     protected $guarded = [];
 
     public function wallet()

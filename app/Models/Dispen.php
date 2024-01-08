@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Dispen extends Model
 {
     use HasFactory;
-    protected $table = 'accGirl_dispens';
+    protected $table = 'acc_dispens';
     protected $guarded = [];
     public function santri()
     {

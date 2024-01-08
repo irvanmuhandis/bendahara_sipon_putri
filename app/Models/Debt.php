@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Debt extends Model
 {
     use HasFactory;
-    protected $table = 'accGirl_debts';
+    protected $table = 'acc_debts';
     protected $guarded = [];
 
     public function santri()

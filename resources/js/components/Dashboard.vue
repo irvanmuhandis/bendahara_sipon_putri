@@ -14,6 +14,7 @@ const date = ref({
     'number': null,
     'year': null
 });
+
 const sums = ref({
     'income_bill': null,
     'income_debt': null,

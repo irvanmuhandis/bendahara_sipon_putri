@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset=“UTF-8”>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Keuangan Putri PP KGS</title>
@@ -22,8 +22,8 @@
 
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
-                            class="fas fa-bars"></i></a>
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i>
+                    </a>
                 </li>
             </ul>
 
@@ -56,12 +56,12 @@
 
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="image">
-                        <img src="https://ui-avatars.com/api/?name={{$operator['nickname']}}" class="img-circle"
+                        <img src="https://ui-avatars.com/api/?name={{ $operator['nickname'] }}" class="img-circle"
                             alt="User Image">
 
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">{{$operator['nickname']}}</a>
+                        <a href="#" class="d-block">{{ $operator['nickname'] }}</a>
                     </div>
                 </div>
 
@@ -69,7 +69,8 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item">
-                            <router-link to="/"  :class="{ 'active': $route.path === '/' }" active-class="active" class="nav-link">
+                            <router-link to="/" :class="{ 'active': $route.path === '/' }"
+                                active-class="active" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard

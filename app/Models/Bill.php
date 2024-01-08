@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Bill extends Model
 {
     use HasFactory;
-    protected $table = 'accGirl_bills';
+    protected $table = 'acc_bills';
     protected $guarded = [];
 
 

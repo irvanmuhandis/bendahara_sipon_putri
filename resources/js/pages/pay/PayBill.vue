@@ -354,7 +354,7 @@ onMounted(() => {
                                             <input type="checkbox" @change="totalize($event, bill.id)"
                                                 v-model="formValue.bill" :value="bill.id" />
                                             <label class="ml-2">
-                                                {{ bill.account.account_name }} | {{ bill.month }} |
+                                                {{ bill.account.account_name }} | {{ bill.month==null?bill.title:bill.month }} |
                                                 <span class="text-right text-monospace">
                                                     {{
                                                         formatMoney(
@@ -486,7 +486,7 @@ onMounted(() => {
                                             class="fas fa-long-arrow-alt-down"></i>
                                     </span>
                                 </th>
-                                <th>Bulan
+                                <th>Keterangan
                                 </th>
                                 <th>Bayar
                                     <span class="float-right" @click="sort('payment')">
@@ -509,7 +509,8 @@ onMounted(() => {
                                 </td>
                                 <td>{{ formatDate(pay.created_at) }}</td>
                                 <td>{{ pay.payable.santri.fullname }} - {{ pay.payable.santri.nis }} </td>
-                                <td>{{ pay.payable.month }}</td>
+                                <td v-if="pay.payable.title==null">Bulan {{ pay.payable.month }}</td>
+                                <td v-else>{{ pay.payable.title }}</td>
                                 <td>{{ formatMoney(pay.payment) }}</td>
                                 <td>{{ formatMoney(pay.payable.remainder) }}</td>
                                 <td>{{ pay.wallet.wallet_name }}</td>

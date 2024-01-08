@@ -12,12 +12,13 @@ use Illuminate\Console\View\Components\Warn;
 class WalletController extends Controller
 {
 
-    var  $tableName = "accGirl_wallets";
+    var  $tableName = "acc_wallets";
 
     public function index()
     {
         $fil = request('filter');
         $req = request('value');
+
         $searchQuery = request('query');
 
         if ($fil == '') {
