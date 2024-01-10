@@ -220,6 +220,8 @@ class MasterController extends Controller
                     ->select(DB::raw('count(distinct(month))'))
                     ->whereBetween('month', [request('start'), request('end')])
                     ->whereIn('account_id', $account)
+                    ->where('title', null)
+                    ->orWhere('title', "")
                     ->where('payment_status', '<', 3);
             }])
             ->with(['bill' => function ($query) use ($account) {
@@ -227,6 +229,8 @@ class MasterController extends Controller
                     ->whereBetween('month', [request('start'), request('end')])
                     ->whereIn('account_id', $account)
                     ->where('payment_status', '<', 3)
+                    ->where('title', null)
+                    ->orWhere('title', "")
                     ->groupBy('month')
                     ->groupBy('nis')
                     ->orderBy('month');
@@ -235,12 +239,16 @@ class MasterController extends Controller
                 $bill
                     ->whereBetween('month', [request('start'), request('end')])
                     ->whereIn('account_id', $account)
+                    ->where('title', null)
+                    ->orWhere('title', "")
                     ->where('payment_status', '<', 3);
             }], 'remainder')
             ->withSum(['bill as sum_amount' => function ($bill) use ($account) {
                 $bill
                     ->whereBetween('month', [request('start'), request('end')])
                     ->whereIn('account_id', $account)
+                    ->where('title', null)
+                    ->orWhere('title', "")
                     ->where('payment_status', '<', 3);
             }], 'amount')
             ->havingRaw('bill_count >= ?', [request('length')])

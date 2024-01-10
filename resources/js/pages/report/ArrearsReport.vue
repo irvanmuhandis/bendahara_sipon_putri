@@ -410,7 +410,7 @@ onMounted(() => {
 
                                     <div
                                         class="justify-content-between rounded mt-2 mb-2 p-0 d-inline-flex border-gray border w-100">
-                                        <div class="d-flex text-center text-bold ml-2">
+                                        <div style="align-self:center" class="d-flex text-center text-bold ml-2">
                                             Total Tagihan : {{ formatMoney(billing.sum) }}
                                         </div>
                                         <div class="bg-success  p-2 h-100">
@@ -775,7 +775,7 @@ onMounted(() => {
                                                     }) }}</strong>. Kami mohon sekiranya
                                                     Bapak / Ibu dapat segera melunasi tunggakan tersebut. Informasi
                                                     lebih
-                                                    lanjut dapat menghubungi 0823-3392-2366 a.n. Saniyatin Nibroniyah.
+                                                    lanjut dapat menghubungi 0823-3392-2366 a.n. Saniyatin Nibroniah.
                                                 </span>
                                                 <br>
                                                 <span>
@@ -800,7 +800,7 @@ onMounted(() => {
                                             </div>
                                             <div class="col text-center">
                                                 <div class="pb-5 mb-5">Bendahara Pondok Putri</div>
-                                                <div class=""><u><strong>Saniyatin Nibroniyah, S.Kep, AH</strong></u>
+                                                <div class=""><u><strong>Saniyatin Nibroniah, S.Kep, AH</strong></u>
                                                 </div>
                                             </div>
                                         </div>
