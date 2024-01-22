@@ -13,8 +13,6 @@
     font-size: 12px;
 }
 
-
-
 .select2-selection__choice {
     padding: 0px 25px !important ;
 }
@@ -43,6 +41,10 @@
     height: 50px;
 }
 
-.text-times{
-    font-family:serif;
+.text-times {
+    font-family: serif;
+}
+
+.h-300 {
+    max-height: 300px;
 }

@@ -565,7 +565,7 @@ onMounted(() => {
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="card-body table-responsive p-0" style="height: 300px;">
+                                                <div class="card-body table-responsive p-0" style="max-height: 300px;">
                                                     <div v-if="load" class="text-center m-2">
                                                         <div class="spinner-grow spinner-grow-sm mr-1 text-primary"></div>
                                                         <div class="spinner-grow spinner-grow-sm mr-1 text-primary"></div>
